@@ -1,21 +1,42 @@
-function generateArray(start, end) {
-
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+  
+  function generateArray(start, end) {
     var arr = [];
-    // Check if the start value is less than or equal to the end value
     if (start <= end) {
-        for (var i = start; i <= end; i++) {
-    // Push every numebr from start to end into the array
-            arr.push(i);
-        }
+      for (var i = start; i <= end; i++) {
+        arr.push(i);
+      }
     } else {
-    // If the start is grater than end, generate descending array
-        for (var j = start; j >= end; j--) {
-            arr.push(j);
-        }
+      for (var j = start; j >= end; j--) {
+        arr.push(j);
+      }
     }
-    // Return the generated array
     return arr;
-}
-
-console.log(generateArray(4, 7)); 
-console.log(generateArray(-4, 7)); 
+  }
+  
+  function getUserInput(prompt) {
+    return new Promise((resolve) => {
+      readline.question(prompt, (answer) => {
+        resolve(parseInt(answer));
+      });
+    });
+  }
+  
+  async function main() {
+    try {
+      const start = await getUserInput("Enter the starting value: ");
+      const end = await getUserInput("Enter the ending value: ");
+      const generatedArray = generateArray(start, end);
+      console.log("Generated Array:", generatedArray);
+    } catch (error) {
+      console.error("Error:", error.message);
+    } finally {
+      readline.close();
+    }
+  }
+  
+  main();
+  
